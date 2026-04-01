@@ -25,8 +25,12 @@ const swaggerOptions = {
     },
     servers: [
       {
+        url: 'http://localhost:8080',
+        description: 'API Gateway',
+      },
+      {
         url: 'http://localhost:3004',
-        description: 'Development server',
+        description: 'Direct Billing Service',
       },
     ],
   },
