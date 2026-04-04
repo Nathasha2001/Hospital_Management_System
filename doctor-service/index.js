@@ -282,6 +282,47 @@ app.put('/doctors/:id', async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /doctors/{id}:
+ *   delete:
+ *     summary: Delete a doctor
+ *     tags: [Doctors]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: number
+ *         required: true
+ *         description: Doctor ID
+ *     responses:
+ *       200:
+ *         description: Doctor deleted successfully
+ *       404:
+ *         description: Doctor not found
+ *       400:
+ *         description: Invalid ID
+ */
+app.delete('/doctors/:id', async (req, res) => {
+  const id = parseInt(req.params.id);
+  
+  if (isNaN(id)) {
+    return res.status(400).json({ error: 'Invalid doctor ID' });
+  }
+  
+  try {
+    const doctor = await Doctor.findOneAndDelete({ id });
+    
+    if (!doctor) {
+      return res.status(404).json({ error: 'Doctor not found' });
+    }
+    
+    res.json({ message: 'Doctor deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete doctor', details: error.message });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Doctor Service running on port ${PORT}`);
 });

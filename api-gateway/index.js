@@ -231,6 +231,29 @@ const swaggerDocument = {
           },
         },
       },
+      delete: {
+        tags: ['Doctors'],
+        summary: 'Delete doctor',
+        parameters: [
+          {
+            name: 'id',
+            in: 'path',
+            required: true,
+            schema: { type: 'number' },
+          },
+        ],
+        responses: {
+          '200': {
+            description: 'Doctor deleted successfully',
+          },
+          '404': {
+            description: 'Doctor not found',
+          },
+          '400': {
+            description: 'Invalid ID',
+          },
+        },
+      },
     },
     '/appointments': {
       get: {
